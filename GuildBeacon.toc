@@ -4,7 +4,7 @@
 ## Notes: Guild recruitment beacon, whisper inbox and candidate pipeline.
 ## Notes-frFR: Balise de recrutement, boite MP et pipeline candidats pour officiers de guilde.
 ## Author: Khalandras
-## Version: 0.1.0
+## Version: 0.2.0
 ## SavedVariables: GuildBeaconDB
 ## Category: Guild
 ## Category-frFR: Guilde
@@ -14,20 +14,27 @@ Locales\enUS.lua
 Locales\frFR.lua
 Core\Init.lua
 Core\Branding.lua
+Core\Widgets.lua
 Core\Logger.lua
 Core\EventBus.lua
 Core\ProfileManager.lua
 Core\ModuleManager.lua
 Core\Bootstrap.lua
+Core\TestHarness.lua
+Modules\Beacon\Core\Templates.lua
+Modules\Beacon\Core\AntiSpam.lua
 Modules\Beacon\Core\Scheduler.lua
 Modules\Beacon\Module.lua
 Modules\Beacon\Register.lua
 Modules\Inbox\Core\WhisperCapture.lua
+Modules\Inbox\Core\GuildCapture.lua
 Modules\Inbox\Module.lua
 Modules\Inbox\Register.lua
 Modules\Candidates\Core\Store.lua
+Modules\Candidates\Core\Enrichment.lua
 Modules\Candidates\Module.lua
 Modules\Candidates\Register.lua
+UI\Dashboard.lua
 UI\ConfigPanel.lua
 UI\SlashCommands.lua
 Init.lua

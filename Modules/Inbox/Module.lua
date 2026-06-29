@@ -11,17 +11,26 @@ function Module:OnInitialize()
     if M.WhisperCapture then
         M.WhisperCapture:Initialize(GB.API)
     end
+    if M.GuildCapture then
+        M.GuildCapture:Initialize(GB.API)
+    end
 end
 
 function Module:OnEnable()
     if M.WhisperCapture then
         M.WhisperCapture:Enable()
     end
+    if M.GuildCapture then
+        M.GuildCapture:Enable()
+    end
 end
 
 function Module:OnDisable()
     if M.WhisperCapture then
         M.WhisperCapture:Disable()
+    end
+    if M.GuildCapture then
+        M.GuildCapture:Disable()
     end
 end
 

@@ -2,10 +2,10 @@
 
 local GB = GuildBeacon
 local WhisperCapture = {}
-GB.Modules.Inbox = GB.Modules.Inbox or {}
 GB.Modules.Inbox.WhisperCapture = WhisperCapture
 
 local api
+local subscribed
 
 function WhisperCapture:Initialize(busApi)
     api = busApi
@@ -22,28 +22,33 @@ function WhisperCapture:OnChatMessage(event, text, sender, ...)
     if event ~= "CHAT_MSG_WHISPER" and event ~= "CHAT_MSG_BN_WHISPER" then
         return
     end
-    local store = GB.Modules.Candidates and GB.Modules.Candidates.Store
+    local store = GB.Modules.Candidates.Store
     if store then
         store:AddMessage({
-            channel = "whisper",
+            channel = event == "CHAT_MSG_BN_WHISPER" and "bnet" or "whisper",
             from = sender,
             body = text,
             at = time(),
         })
     end
-    GB.API:DispatchInternal("GUILDBEACON_INBOX_MESSAGE", sender, text)
 end
 
 function WhisperCapture:Enable()
-    if not api then
+    if not api or subscribed then
         return
     end
-    api:Subscribe("CHAT_MSG_WHISPER", function(event, ...) WhisperCapture:OnChatMessage(event, ...) end)
-    api:Subscribe("CHAT_MSG_BN_WHISPER", function(event, ...) WhisperCapture:OnChatMessage(event, ...) end)
+    subscribed = true
+    api:Subscribe("CHAT_MSG_WHISPER", function(event, text, sender, ...)
+        WhisperCapture:OnChatMessage(event, text, sender, ...)
+    end)
+    api:Subscribe("CHAT_MSG_BN_WHISPER", function(event, text, sender, ...)
+        WhisperCapture:OnChatMessage(event, text, sender, ...)
+    end)
 end
 
 function WhisperCapture:Disable()
-    if api then
+    if api and subscribed then
         api:UnsubscribeAll(WhisperCapture)
+        subscribed = nil
     end
 end

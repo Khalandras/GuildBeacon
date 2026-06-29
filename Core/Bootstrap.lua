@@ -40,6 +40,9 @@ function Bootstrap:OnAddonLoaded()
     Internal.Logger:Initialize()
     Internal.EventBus:Initialize()
     Internal.ModuleManager:Initialize()
+    if GB.UI and GB.UI.Dashboard then
+        GB.UI.Dashboard:Initialize()
+    end
     if GB.UI and GB.UI.SlashCommands then
         GB.UI.SlashCommands:Initialize()
     end

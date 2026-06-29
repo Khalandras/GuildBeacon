@@ -1,20 +1,27 @@
 # Changelog
 
-All notable changes to GuildBeacon are documented here.
-
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [0.2.0] - 2026-06-29
+
+### Added
+
+- Officer dashboard (`/gb dashboard`) with Candidates, Inbox and Beacon tabs.
+- Settings panel: interval, channels, officer-only, capture options, Raider.IO toggle.
+- Beacon: template rotation, channel rotation, jitter, anti-spam cooldown, post now.
+- Inbox: guild chat keyword capture.
+- Candidates: status workflow, notes field in store, Raider.IO enrichment, export JSON.
+- Locales FR/EN complete for UI and statuses.
+
+### Changed
+
+- Version bump 0.1.0 → 0.2.0 (first playable release).
 
 ## [0.1.0] - 2026-06-29
 
 ### Added
 
-- Initial skeleton: Core (Bootstrap, EventBus, ProfileManager, ModuleManager).
-- Modules Beacon, Inbox, Candidates with lifecycle and saved data.
-- Recruitment scheduler stub with templates and `/gb beacon` commands.
-- Whisper capture into local candidate store.
-- Slash commands `/gb`, `/guildbeacon`.
-- Locales enUS and frFR.
-- Discord patchnotes workflow (GitHub Actions).
-- Patch notes `docs/patchnotes/0.1.0.md`.
+- Initial skeleton: Core, modules, slash commands, Discord workflow.
 
+[0.2.0]: https://github.com/Khalandras/GuildBeacon/releases/tag/v0.2.0
 [0.1.0]: https://github.com/Khalandras/GuildBeacon/releases/tag/v0.1.0

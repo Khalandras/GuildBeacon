@@ -2,51 +2,48 @@
 
 Standalone World of Warcraft addon for guild officers: recruitment beacon, whisper inbox, and candidate pipeline.
 
-No dependency on KhalandrasUICore. Optional visual alignment with Khalandras palette (gold / bordeaux).
+## Quick start
 
-## Features (roadmap)
+1. Install in `Interface/AddOns/GuildBeacon`
+2. `/reload` and enable the addon
+3. `/gb dashboard` to open the officer panel
+4. `/gb beacon start` to begin scheduled recruitment posts (officer rank required)
 
-| Module | v0.1 | Next |
-|---|---|---|
-| **Beacon** | Templates, scheduler stub, `/gb beacon` | Anti-spam, channel rotation, instance rules |
-| **Inbox** | Whisper capture | Guild chat keywords, filters |
-| **Candidates** | Local store, statuses | Raider.IO hints, dashboard sync |
+## Commands
+
+| Command | Action |
+|---|---|
+| `/gb` or `/guildbeacon` | Help |
+| `/gb dashboard` | Officer dashboard |
+| `/gb config` | Settings |
+| `/gb beacon start\|stop\|preview\|now` | Recruitment beacon |
+| `/gb export` | Export candidates JSON |
+| `/gb status` | Module status |
+
+## Features
+
+- **Beacon** - Scheduled posts with template/channel rotation, jitter, anti-spam, instance/combat pause
+- **Inbox** - Whisper and guild keyword capture
+- **Candidates** - Pipeline statuses, Raider.IO enrichment (optional), local store ready for sync
+- **UI** - Dashboard + settings panel (Khalandras gold/bordeaux palette)
 
 ## Architecture
 
 ```
-GuildBeacon/
-├── Core/           Bootstrap, EventBus, profiles, modules
-├── Modules/
-│   ├── Beacon/     Scheduled recruitment messages
-│   ├── Inbox/      Incoming whisper capture
-│   └── Candidates/ Pipeline + export (future sync bridge)
-└── UI/             Slash commands, config panel (WIP)
+Core/       Bootstrap, EventBus, profiles, widgets
+Modules/    Beacon, Inbox, Candidates
+UI/         Dashboard, ConfigPanel, slash commands
 ```
 
-**SavedVariables:** `GuildBeaconDB` (profiles per character).
+SavedVariables: `GuildBeaconDB`
 
-**Sync (future):** addon cannot call a custom API from WoW. Dashboard + Discord bot will use a companion export (`Store:ExportJSON`) or file bridge.
-
-## Install
-
-Copy `GuildBeacon` into `World of Warcraft/_retail_/Interface/AddOns/` and enable in the AddOns list.
-
-## Commands
-
-- `/gb` or `/guildbeacon`
-- `/gb status` - module states
-- `/gb beacon start|stop|preview` - recruitment beacon
-- `/gb inbox` - inbox message count
-- `/gb candidates` - tracked candidates count
+Future sync: companion app reads export JSON → khalandras.eu dashboard + Discord bot.
 
 ## Releases
 
 - [CHANGELOG.md](CHANGELOG.md)
-- Patch notes: `docs/patchnotes/`
-- Site (planned): https://khalandras.eu/guildbeacon
-- Discord: `#guildbeacon-updates` (embed on push to `main`, needs `DISCORD_WEBHOOK_URL` secret)
+- Discord : `#patchnotes` (embed à chaque push sur `main`, auteur **GuildBeacon · Addon WoW**, secret `DISCORD_WEBHOOK_URL`)
 
 ## License
 
-All rights reserved - Khalandras (adjust when you pick a license).
+All rights reserved - Khalandras.

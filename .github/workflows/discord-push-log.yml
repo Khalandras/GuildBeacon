@@ -9,12 +9,12 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: GuildBeacon
+      PROJECT_NAME: GuildBeacon · Addon WoW
       PROJECT_URL: https://github.com/Khalandras/GuildBeacon
-      PROJECT_ICON: https://khalandras.eu/patchnotes-icon
-      THUMBNAIL_URL: https://khalandras.eu/patchnotes-icon
-      DISCORD_USERNAME: Patchnotes
-      FOOTER_TEXT: Patchnotes · GuildBeacon
+      PROJECT_ICON: https://raw.githubusercontent.com/Khalandras/GuildBeacon/main/docs/assets/guildbeacon-icon.png
+      THUMBNAIL_URL: https://raw.githubusercontent.com/Khalandras/GuildBeacon/main/docs/assets/guildbeacon-icon.png
+      DISCORD_USERNAME: Patchnotes · Addon
+      FOOTER_TEXT: Patchnotes · Addon WoW · GuildBeacon
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
       COMMITS_JSON: ${{ toJson(github.event.commits) }}
       COMPARE_URL: ${{ github.event.compare }}
