@@ -1,0 +1,33 @@
+## Interface: 120007, 120100
+## Title: |cffd4af37Guild|r|cff8c2a3aBeacon|r
+## Title-frFR: |cffd4af37Guild|r|cff8c2a3aBeacon|r
+## Notes: Guild recruitment beacon, whisper inbox and candidate pipeline.
+## Notes-frFR: Balise de recrutement, boite MP et pipeline candidats pour officiers de guilde.
+## Author: Khalandras
+## Version: 0.1.0
+## SavedVariables: GuildBeaconDB
+## Category: Guild
+## Category-frFR: Guilde
+
+Config.lua
+Locales\enUS.lua
+Locales\frFR.lua
+Core\Init.lua
+Core\Branding.lua
+Core\Logger.lua
+Core\EventBus.lua
+Core\ProfileManager.lua
+Core\ModuleManager.lua
+Core\Bootstrap.lua
+Modules\Beacon\Core\Scheduler.lua
+Modules\Beacon\Module.lua
+Modules\Beacon\Register.lua
+Modules\Inbox\Core\WhisperCapture.lua
+Modules\Inbox\Module.lua
+Modules\Inbox\Register.lua
+Modules\Candidates\Core\Store.lua
+Modules\Candidates\Module.lua
+Modules\Candidates\Register.lua
+UI\ConfigPanel.lua
+UI\SlashCommands.lua
+Init.lua
