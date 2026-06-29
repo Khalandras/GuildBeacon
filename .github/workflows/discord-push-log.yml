@@ -72,10 +72,12 @@ jobs:
 
             commit_type="other"
             subject_rest="$subject"
-            if [[ "$subject" =~ ^(feat|fix|perf|ci)(\([^)]+\))?!?:[[:space:]]*(.*)$ ]]; then
+            cc_prefix_re='^(feat|fix|perf|ci)(\([^)]+\))?!?:[[:space:]]*(.*)$'
+            other_prefix_re='^[a-zA-Z]+(\([^)]+\))?!?:[[:space:]]*(.*)$'
+            if [[ "$subject" =~ $cc_prefix_re ]]; then
               commit_type="${BASH_REMATCH[1]}"
               subject_rest="${BASH_REMATCH[3]}"
-            elif [[ "$subject" =~ ^[a-zA-Z]+(\([^)]+\))?!?:[[:space:]]*(.*)$ ]]; then
+            elif [[ "$subject" =~ $other_prefix_re ]]; then
               subject_rest="${BASH_REMATCH[2]}"
             fi
 
