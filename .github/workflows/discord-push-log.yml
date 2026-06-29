@@ -11,8 +11,10 @@ jobs:
     env:
       PROJECT_NAME: GuildBeacon · Addon WoW
       PROJECT_URL: https://github.com/Khalandras/GuildBeacon
-      PROJECT_ICON: https://khalandras.eu/icon
+      WEBHOOK_AVATAR: https://khalandras.eu/patchnotes-icon
+      AUTHOR_ICON: https://raw.githubusercontent.com/Khalandras/GuildBeacon/main/docs/assets/guildbeacon-icon.png
       THUMBNAIL_URL: https://khalandras.eu/patchnotes-icon
+      FOOTER_ICON: https://khalandras.eu/patchnotes-icon
       DISCORD_USERNAME: Patchnotes · Addon
       FOOTER_TEXT: Patchnotes · Addon WoW · GuildBeacon
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -125,16 +127,16 @@ jobs:
 
             payload="$(jq -n \
               --arg username "$DISCORD_USERNAME" \
-              --arg avatar_url "$PROJECT_ICON" \
+              --arg avatar_url "$WEBHOOK_AVATAR" \
               --arg author_name "$PROJECT_NAME" \
               --arg author_url "$PROJECT_URL" \
-              --arg author_icon "$PROJECT_ICON" \
+              --arg author_icon "$AUTHOR_ICON" \
               --arg title "$title" \
               --arg description "$description" \
               --argjson color "$embed_color" \
               --arg thumbnail "$THUMBNAIL_URL" \
               --arg footer_text "$FOOTER_TEXT" \
-              --arg footer_icon "$PROJECT_ICON" \
+              --arg footer_icon "$FOOTER_ICON" \
               --arg timestamp "$commit_timestamp" \
               '{
                 username: $username,
