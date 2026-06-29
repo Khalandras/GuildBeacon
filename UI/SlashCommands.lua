@@ -67,21 +67,49 @@ local function CmdExport()
     end
 end
 
+local function SlashError(message)
+    local text = tostring(message or "unknown error")
+    if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff4444GuildBeacon /gb:|r " .. text)
+    end
+end
+
+local function TrimInput(text)
+    text = text or ""
+    if strtrim then
+        return strtrim(text)
+    end
+    return text:match("^%s*(.-)%s*$") or ""
+end
+
+local function OpenDashboard(tab)
+    if not GB.UI or not GB.UI.Dashboard then
+        SlashError(GB.L("DASHBOARD_MISSING"))
+        return
+    end
+    local ok, err = pcall(function()
+        if not GB.UI.Dashboard:TryOpen(tab) then
+            SlashError(GB.L("DASHBOARD_OPEN_FAIL"))
+        end
+    end)
+    if not ok then
+        SlashError(err)
+    end
+end
+
 function SlashCommands:Handle(input)
     local cmd, rest = input:match("^(%S*)%s*(.*)$")
     cmd = (cmd or ""):lower()
     rest = rest or ""
 
-    if cmd == "" or cmd == "help" then
+    if cmd == "" then
+        OpenDashboard("triage")
+    elseif cmd == "help" or cmd == "?" then
         PrintHelp()
     elseif cmd == "config" then
-        if GB.UI.ConfigPanel then
-            GB.UI.ConfigPanel:Toggle()
-        end
+        OpenDashboard("settings")
     elseif cmd == "dashboard" or cmd == "dash" then
-        if GB.UI.Dashboard then
-            GB.UI.Dashboard:Toggle()
-        end
+        OpenDashboard("triage")
     elseif cmd == "status" then
         CmdStatus()
     elseif cmd == "beacon" then
@@ -92,19 +120,17 @@ function SlashCommands:Handle(input)
         if store then
             GB.API:Print("Inbox: %d messages", #store:GetMessages())
         end
-        if GB.UI.Dashboard then
-            GB.UI.Dashboard:Open()
-            GB.UI.Dashboard:SelectTab("inbox")
-        end
+        OpenDashboard("triage")
     elseif cmd == "candidates" or cmd == "candidats" then
-        if GB.UI.Dashboard then
-            GB.UI.Dashboard:Open()
-            GB.UI.Dashboard:SelectTab("candidates")
-        end
+        OpenDashboard("pipeline")
     elseif cmd == "tests" or cmd == "test" then
+        local ui = GB.API:GetModuleConfig().ui
+        ui.diagnosticsOpen = true
+        OpenDashboard("settings")
+    elseif cmd == "resetui" then
         if GB.UI.Dashboard then
-            GB.UI.Dashboard:Open()
-            GB.UI.Dashboard:SelectTab("tests")
+            GB.UI.Dashboard:ResetUI()
+            GB.API:Print(GB.L("RESETUI_DONE"))
         end
     elseif cmd == "export" then
         CmdExport()
@@ -117,6 +143,13 @@ function SlashCommands:Initialize()
     SLASH_GUILDBEACON1 = "/guildbeacon"
     SLASH_GUILDBEACON2 = "/gb"
     SlashCmdList.GUILDBEACON = function(msg)
-        SlashCommands:Handle(strtrim(msg or ""))
+        local ok, err = pcall(function()
+            SlashCommands:Handle(TrimInput(msg))
+        end)
+        if not ok then
+            SlashError(err)
+        end
     end
 end
+
+SlashCommands:Initialize()

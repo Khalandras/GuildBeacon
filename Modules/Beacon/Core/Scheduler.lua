@@ -6,6 +6,7 @@ local Scheduler = {}
 GB.Modules.Beacon.Scheduler = Scheduler
 
 local timerHandle
+local nextPostAt
 local Templates = GB.Modules.Beacon.Templates
 local AntiSpam = GB.Modules.Beacon.AntiSpam
 
@@ -42,6 +43,7 @@ function Scheduler:Stop()
         timerHandle:Cancel()
         timerHandle = nil
     end
+    nextPostAt = nil
 end
 
 function Scheduler:ScheduleNext()
@@ -57,6 +59,7 @@ function Scheduler:ScheduleNext()
         offset = math.random(-jitter, jitter)
     end
     local delay = math.max(30, base + offset)
+    nextPostAt = time() + delay
     timerHandle = C_Timer.NewTimer(delay, function()
         Scheduler:Tick()
         Scheduler:ScheduleNext()
@@ -130,8 +133,32 @@ function Scheduler:Tick()
     end
     if posted then
         AntiSpam:RecordPost(config, message)
+        config.state.postHistory = config.state.postHistory or {}
+        for _, channel in ipairs(channels) do
+            table.insert(config.state.postHistory, 1, {
+                at = time(),
+                channel = channel,
+                body = message,
+                dryRun = config.dryRun,
+            })
+        end
+        while #config.state.postHistory > 8 do
+            table.remove(config.state.postHistory)
+        end
         GB.API:DispatchInternal("GUILDBEACON_BEACON_POSTED", message)
     end
+end
+
+function Scheduler:GetSecondsUntilNextPost()
+    if not nextPostAt then
+        return 0
+    end
+    return math.max(0, nextPostAt - time())
+end
+
+function Scheduler:GetPostHistory()
+    local config = GB.API:GetModuleConfig().beacon
+    return config.state and config.state.postHistory or {}
 end
 
 function Scheduler:Preview()

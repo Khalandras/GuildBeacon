@@ -1,6 +1,7 @@
 --- Guild chat keyword capture.
 
 local GB = GuildBeacon
+GB.Modules.Inbox = GB.Modules.Inbox or {}
 local GuildCapture = {}
 GB.Modules.Inbox.GuildCapture = GuildCapture
 

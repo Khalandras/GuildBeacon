@@ -1,6 +1,7 @@
 --- Whisper capture for recruitment inbox.
 
 local GB = GuildBeacon
+GB.Modules.Inbox = GB.Modules.Inbox or {}
 local WhisperCapture = {}
 GB.Modules.Inbox.WhisperCapture = WhisperCapture
 

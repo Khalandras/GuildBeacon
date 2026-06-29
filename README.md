@@ -25,7 +25,13 @@ Standalone World of Warcraft addon for guild officers: recruitment beacon, whisp
 - **Beacon** - Scheduled posts with template/channel rotation, jitter, anti-spam, instance/combat pause
 - **Inbox** - Whisper and guild keyword capture
 - **Candidates** - Pipeline statuses, Raider.IO enrichment (optional), local store ready for sync
-- **UI** - Dashboard + settings panel (Khalandras gold/bordeaux palette)
+- **UI** - Dashboard officer (master–detail, Khalandras gold/bordeaux palette). Voir `docs/art-direction.md`.
+
+## Documentation
+
+- [Vision et roadmap](docs/vision-et-roadmap.md) — positionnement, lots, portes de déploiement (CurseForge/Wago), Nox vs public
+- [Maquette dashboard](docs/dashboard-maquette.md) — écrans détaillés (campagnes, roster, pipeline)
+- [Direction artistique](docs/art-direction.md) — tokens UI, khalandras.eu
 
 ## Architecture
 

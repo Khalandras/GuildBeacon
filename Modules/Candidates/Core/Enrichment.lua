@@ -1,6 +1,7 @@
 --- RaiderIO profile enrichment (optional).
 
 local GB = GuildBeacon
+GB.Modules.Candidates = GB.Modules.Candidates or {}
 local Enrichment = {}
 GB.Modules.Candidates.Enrichment = Enrichment
 

@@ -3,7 +3,6 @@
 local GB = GuildBeacon
 local Internal = GB.Internal
 local API = GB.API
-local L = GB.Locale
 
 local Bootstrap = {}
 Internal.Bootstrap = Bootstrap
@@ -22,7 +21,7 @@ function Bootstrap:Start(addonName)
     bootFrame:SetScript("OnEvent", function(_, event, ...)
         if event == "ADDON_LOADED" then
             local loaded = ...
-            if loaded ~= addonName then
+            if loaded ~= addonName and loaded ~= (GB.ADDON_NAME or "GuildBeacon") then
                 return
             end
             Bootstrap:OnAddonLoaded()
@@ -30,6 +29,16 @@ function Bootstrap:Start(addonName)
             Bootstrap:OnPlayerLogin()
         end
     end)
+end
+
+local function SafeInitDashboard()
+    if not GB.UI or not GB.UI.Dashboard then
+        return
+    end
+    local ok, err = pcall(GB.UI.Dashboard.Initialize, GB.UI.Dashboard)
+    if not ok and Internal.Logger then
+        Internal.Logger:Log(Internal.Logger.LEVEL.ERROR, "Dashboard", "Initialize failed: %s", GB.SafeToString(err))
+    end
 end
 
 function Bootstrap:OnAddonLoaded()
@@ -40,12 +49,10 @@ function Bootstrap:OnAddonLoaded()
     Internal.Logger:Initialize()
     Internal.EventBus:Initialize()
     Internal.ModuleManager:Initialize()
-    if GB.UI and GB.UI.Dashboard then
-        GB.UI.Dashboard:Initialize()
-    end
     if GB.UI and GB.UI.SlashCommands then
         GB.UI.SlashCommands:Initialize()
     end
+    SafeInitDashboard()
     initialized = true
 end
 
@@ -55,6 +62,15 @@ function Bootstrap:OnPlayerLogin()
     end
     playerLoggedIn = true
     Internal.ProfileManager:EnsureProfileForPlayer()
-    API:Print(L["ADDON_LOADED"], GB.Version)
-    API:Print(L["TYPE_HELP"])
+    if GB.UI and GB.UI.SlashCommands and not SlashCmdList.GUILDBEACON then
+        GB.UI.SlashCommands:Initialize()
+    end
+    if not initialized then
+        Bootstrap:OnAddonLoaded()
+    end
+    API:Print(GB.L("ADDON_LOADED"), GB.ADDON_NAME or "GuildBeacon", GB.Version or "?")
+    if GB.WIDGETS_BUILD then
+        API:Print("|cff6b6178Widgets build:|r %s", GB.WIDGETS_BUILD)
+    end
+    API:Print(GB.L("TYPE_HELP"))
 end

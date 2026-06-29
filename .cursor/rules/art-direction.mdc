@@ -1,0 +1,32 @@
+---
+description: Direction artistique GuildBeacon (addon, khalandras.eu, Discord)
+globs: GuildBeacon/**/*
+alwaysApply: false
+---
+
+# GuildBeacon — Direction artistique
+
+Lire `docs/art-direction.md` avant tout travail UI, branding, page web ou embed Discord.
+
+## Tokens obligatoires
+
+| Token | Hex | Usage |
+|---|---|---|
+| Or | `#d4af37` | Titres, actif, badges, noms |
+| Phosphor | `#b794f6` | Beacon (UI), scrollbar, glow |
+| Wine / Bordeaux | `#6b1d3a` / `#8c2a3a` | Signal header, marque TOC |
+| Muted | `#9a8b7f` | Métadonnées, corps secondaire |
+
+## Règles
+
+- Or = structure · Wine/bordeaux = signal · Phosphor = accent NØX · Rouge = danger uniquement.
+- Pas de `BackdropTemplate` ni `SetBackdrop` sur l’UI addon.
+- Sigil = texture losange, pas de caractère Unicode.
+- Pas de dégradés, ombres portées ni animations dans l’UI addon.
+- Statuts pipeline : couleurs définies dans `Widgets.STATUS_COLORS` — ne pas inventer.
+- khalandras.eu : réutiliser les CSS variables de `docs/art-direction.md` section 6.
+- Discord embed release : or `#d4af37`, accent bordeaux `#8c2a3a`.
+
+## Code source de vérité
+
+`Core/Branding.lua` · `Core/Widgets.lua` · `UI/Dashboard.lua`

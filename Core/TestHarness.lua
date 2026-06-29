@@ -100,7 +100,7 @@ end
 
 function TestHarness:ClearTestData()
     local profile = GB.API:GetProfile()
-    local data = profile.candidates
+    local data = profile.candidateStore
     if not data then
         return
     end
